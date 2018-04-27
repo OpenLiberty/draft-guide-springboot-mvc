@@ -11,7 +11,7 @@
 :page-duration: 30 minutes
 :page-releasedate: 2018-11-17
 // INSTRUCTION: Provide a description for the guide index page.
-:page-description: Learn how to migrate a Spring Boot MVC application to run on Open Liberty.
+:page-description: Learn how to migrate a Spring Boot MVC application to run in Open Liberty.
 // INSTUCTION: Please provide relevant tags, try to avoid inventing new ones, tags where there is 1 guide for the tag isn't useful.
 :page-tags: ['Spring Boot', 'Migration', 'Maven']
 // INSTRUCTION: Specify the unique name of the guide that is used in the permalink.  For example below, it is rest-service
@@ -26,12 +26,12 @@
 // Example title: Creating a RESTful web service
 = Migrating a Spring Boot MVC Application to Open Liberty
 
-Learn how to migrate a Spring Boot MVC application to run on Open Liberty instead of an embedded container. 
+Learn how to migrate a Spring Boot MVC application to run in Open Liberty instead of an embedded container. 
 // Write no more than two sentences, or about fifty words with meaningful information on what the user can accomplish with this guide.
 // Do not start the introduction with "This guide...".
 
 == What you'll learn
-You will learn how to use Maven to migrate a sample Spring Boot MVC application to run on Open Liberty. The starting point of this guide will be the finished application from Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. Please first go through that guide if you are not familiar with Spring Boot or Spring MVC.
+You will learn how to use Maven to migrate a sample Spring Boot MVC application to run in Open Liberty. The starting point of this guide will be the finished application from Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. Please first go through that guide if you are not familiar with Spring Boot or Spring MVC.
 
 To perform the migration, you will remove the embedded Tomcat container, replace the Spring Boot Maven Plugin with the Liberty Maven Plugin, modify the application to run from a traditional WAR deployment, and finally package and deploy the application to Open Liberty.
 
@@ -59,7 +59,7 @@ Hello, SpringBootApplication!
 ----
 
 == Migrating the application
-You will now migrate the application to run on Open Liberty instead of embedded Tomcat.
+You will now migrate the application to run in Open Liberty instead of embedded Tomcat.
 
 === Modifying the POM
 
@@ -192,12 +192,12 @@ public class Application extends SpringBootServletInitializer {
 
 Also recall that you previously set the `<start-class>` parameter in the POM properties above to `hello.Application`. This tells the server that your application starts its execution from this class.
 
-This concludes the code changes; you are now ready to build and run your application on Open Liberty.
+This concludes the code changes; you are now ready to build and run your application in Open Liberty.
 
 // Use the following include to pull in the Maven build instructions from the guides-common repo.
 include::{common-includes}/mvnbuild.adoc[]
 
-Now verify that your Spring Boot application is running on Open Liberty. Navigate to the following URL (notice that the port has changed since we define port 9080 in our Liberty configuration):
+Now verify that your Spring Boot application is running in Open Liberty. Navigate to the following URL (notice that the port has changed since we define port 9080 in our Liberty configuration):
 
 ----
 http://localhost:9080/greeting?name=SpringBootApplication
