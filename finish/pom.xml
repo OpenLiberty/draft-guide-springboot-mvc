@@ -34,10 +34,6 @@
     <properties>
         <java.version>1.8</java.version>
         <start-class>hello.Application</start-class>
-        <!-- Liberty server properties -->
-        <wlpServerName>MVCServer</wlpServerName>
-        <testServerHttpPort>9080</testServerHttpPort>
-        <testServerHttpsPort>9443</testServerHttpsPort>
     </properties>
 
     <build>

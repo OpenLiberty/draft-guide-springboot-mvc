@@ -71,21 +71,17 @@ Start by setting the application packaging type to liberty-assembly. No packagin
 ----
 
 ==== Add POM Properties
-Next, add the following properties:
+Next, add the following property:
 
 ----
 <properties>
    ...
     <start-class>hello.Application</start-class>
-    <!-- Liberty server properties -->
-    <wlpServerName>MVCServer</wlpServerName>
-    <testServerHttpPort>9080</testServerHttpPort>
-    <testServerHttpsPort>9443</testServerHttpsPort>
     ...
 </properties>
 ----
 
-Note the inclusion of the `start-class` property, which references the fully qualified Spring Boot startup class. For our example, this class is `hello.Application`. This property indicates the main class to use for the runnable JAR.
+The`start-class` property references the fully qualified Spring Boot startup class. For our example, this class is `hello.Application`. This property indicates the main class to use for the runnable JAR.
 
 ==== Add and Modify Dependencies
 
