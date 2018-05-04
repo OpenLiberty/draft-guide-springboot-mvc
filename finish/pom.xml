@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.springframework</groupId>
+	<artifactId>gs-serving-web-content</artifactId>
+	<packaging>liberty-assembly</packaging>
+	<version>0.1.0</version>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.1.RELEASE</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<start-class>hello.Application</start-class>
+		<!-- Liberty server properties -->
+		<wlpServerName>MVCServer</wlpServerName>
+		<testServerHttpPort>9080</testServerHttpPort>
+		<testServerHttpsPort>9443</testServerHttpsPort>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.wasdev.wlp.maven.plugins</groupId>
+				<artifactId>liberty-maven-plugin</artifactId>
+				<version>2.3</version>
+				<extensions>true</extensions>
+				<!-- Specify configuration, executions for liberty-maven-plugin -->
+				<configuration>
+					<serverName>MVCServer</serverName>
+					<assemblyArtifact>
+						<groupId>io.openliberty</groupId>
+						<artifactId>openliberty-runtime</artifactId>
+						<version>RELEASE</version>
+						<type>zip</type>
+					</assemblyArtifact>
+					<assemblyInstallDirectory>${project.build.directory}/liberty</assemblyInstallDirectory>
+					<packageFile>${project.build.directory}/MVCServerPackage.jar</packageFile>
+					<features>
+						<acceptLicense>true</acceptLicense>
+					</features>
+					<include>runnable</include>
+					<installAppPackages>all</installAppPackages>
+					<appsDirectory>apps</appsDirectory>
+					<stripVersion>true</stripVersion>
+					<looseApplication>true</looseApplication>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
