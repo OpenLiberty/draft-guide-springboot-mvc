@@ -31,9 +31,9 @@ Learn how to migrate a Spring Boot MVC application to run in Open Liberty instea
 // Do not start the introduction with "This guide...".
 
 == What you'll learn
-You will learn how to use Maven to migrate a sample Spring Boot MVC application to run in Open Liberty. The starting point of this guide will be the finished application from Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. Please first go through that guide if you are not familiar with Spring Boot or Spring MVC. 
+You will learn how to use Maven to migrate a sample Spring Boot MVC application to run in Open Liberty. The starting point of this guide will be the finished application from Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. Please first go through that guide if you are not familiar with Spring Boot or Spring MVC. Note that Java 8 is required to run this project.
 
-To perform the migration, you will remove the embedded Tomcat container, replace the Spring Boot Maven Plugin with the Liberty Maven Plugin, modify the application to run from a traditional WAR deployment, and finally package and deploy the application to Open Liberty. Note that this guide will not cover migration of test cases, and the starting project does not include test code or dependencies. 
+Several steps are required to perform the migration. First, you will remove the embedded Tomcat container. Next, you will replace the Spring Boot Maven Plugin with the Liberty Maven Plugin. Then, you will modify the application to run from a traditional WAR deployment. Finally, you will package and deploy the application to Open Liberty. Note that this guide will not cover migration of test cases, and the starting project does not include test code or dependencies. 
 
 // Add this getting started section to your guide if it is applicable. Use the following include to pull in the git clone instructions from the guides-common repo.
 include::{common-includes}/gitclone.adoc[]
@@ -59,7 +59,7 @@ Hello, SpringBootApplication!
 ----
 
 == Migrating the application
-You will now migrate the application to run in Open Liberty instead of embedded Tomcat.
+You will now migrate the application to run in Open Liberty instead of embedded Tomcat. Make these changes in the `start` folder. 
 
 === Modifying the POM
 
@@ -88,18 +88,23 @@ The`start-class` property references the fully qualified Spring Boot startup cla
 The `spring-boot-starter-thymeleaf` artifact transitively depends on the `spring-boot-starter-web` dependency. Because `spring-boot-starter-web` uses Tomcat as the default embedded server, you will need to exclude it in our configuration since we want to run our application in Open Liberty. Thus, add the following exclusion to the `spring-boot-starter-thymeleaf` dependency:
 
 ----
-<exclusions>
-	<exclusion>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-tomcat</artifactId>
-	</exclusion>
-</exclusions>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    <!-- Add this -->
+    <exclusions>
+        <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
 ----
 
 You can also remove the `spring-boot-devtools` dependency. 
 
 ==== Add the Liberty Maven Plugin
-Finally, add and configure the `liberty-maven-plugin` as shown below. You can also remove the `spring-boot-maven-plugin` that was included in the POM of the sample project.
+Finally, replace the `spring-boot-maven-plugin` configuration with the `liberty-maven-plugin` configuration as shown below.
 
 ----
 <plugin>
@@ -169,7 +174,7 @@ Add the following code to `server.xml`:
 In the server configuration, the application context root is mapped to the server root directory. The `servlet-3.1` feature is also needed for running our application, as well as other items which are described in the XML comments. 
 
 === Changing the Application Startup Process
-You will now need to change the startup process for your application. Traditionally, a Spring Boot application running on an embedded server such as Tomcat simply calls `SpringApplication.run(...)` in its main class (in this case `hello.Application`). However, your class needs to extend `SpringBootServletInitializer` instead when being deployed to an Open Liberty server, as shown below:
+You will now need to change the startup process for your application. Traditionally, a Spring Boot application running on an embedded server such as Tomcat simply calls `SpringApplication.run(...)` in its main class (in this case `hello.Application`). However, your class needs to extend `SpringBootServletInitializer` instead when being deployed to an Open Liberty server. Replace the original class with the following code:
 
 ----
 package hello;
@@ -208,7 +213,7 @@ include::{common-includes}/mvnpackage.adoc[]
 
 == Great work! You're done!
 
-You've learned how to migrate a basic Spring Boot MVC application to run in Open Liberty.
+You migrated a basic Spring Boot MVC application to run in Open Liberty.
 
 // Briefly summarize what the user achieved in this guide (1-2 sentences).
 
