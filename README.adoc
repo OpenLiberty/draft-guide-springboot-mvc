@@ -209,7 +209,7 @@ http://localhost:9080/greeting?name=SpringBootApplication
 You will notice the same output as in the starting application.
 
 // Use the following include to pull in the Liberty start/stop server instructions from the guides-common repo.
-include::{common-includes}/mvnpackage.adoc[]
+include::{common-includes}/mvncompile.adoc[]
 
 == Great work! You're done!
 
