@@ -63,6 +63,8 @@ You are now ready to migrate the application to run in Open Liberty instead of e
 
 === Modifying the POM
 
+Navigate to the `start/pom.xml` file to modify the starter POM. 
+
 ==== Change the packaging type
 Start by setting the application packaging type to liberty-assembly. No packaging type is specified in the starting project, so you'll need to add the following line near the top of the POM, after the `version` parameter.
 
@@ -141,7 +143,7 @@ In this plugin, you specify an Open Liberty server called "MVCServer" which the 
 Further documentation of the plugin configuration is provided in the https://github.com/WASdev/ci.maven/tree/tools-integration[ci.maven] repository.
 
 === Configuring the server
-Next, provide the configuration for the Open Liberty server. Create a file called `server.xml` and place it in `src/test/resources`, which is the default directory for the `configFile` configuration parameter in the `liberty-maven-plugin`. 
+Next, provide the configuration for the Open Liberty server. Create a `src/test/resources/server.xml` server configuration file (this is the default location defined by the `configFile` configuration parameter in the `liberty-maven-plugin`). 
 
 Add the following code to `server.xml`:
 
