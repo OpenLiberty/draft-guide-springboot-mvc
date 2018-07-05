@@ -7,7 +7,7 @@
 //     IBM Corporation
 //
 :page-layout: guide
-:projectid: spring-boot-mvc-migration
+:projectid: draft-guide-springboot-mvc
 :page-duration: 30 minutes
 :page-releasedate: 2018-11-17
 // INSTRUCTION: Provide a description for the guide index page.
@@ -31,14 +31,14 @@ Learn how to migrate a Spring Boot Model-View-Controller (MVC) application to ru
 // Do not start the introduction with "This guide...".
 
 == What you'll learn
-You will learn how to use Maven to migrate a sample Spring Boot Model-View-Controller (MVC) application to run in Open Liberty. The starting point of this guide will be the finished application from Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. Please first go through that guide if you are not familiar with Spring Boot or Spring MVC. Note that Java 8 is required to run this project.
+You will learn how to use Maven to migrate a sample Spring Boot Model-View-Controller (MVC) application to run in Open Liberty. The sample application that you will be migrating is Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. If you are not familiar with Spring Boot or Spring MVC, it will be helpful to to complete that guide before proceeding. Java 8 or later is required to run the sample application.
 
 Several steps are required to perform the migration. First, you will remove the embedded Tomcat container. Next, you will replace the Spring Boot Maven Plugin with the Liberty Maven Plugin. Then, you will modify the application to run from a traditional WAR deployment. Finally, you will package and deploy the application to Open Liberty. Note that this guide will not cover migration of test cases, and the starting project does not include test code or dependencies. 
 
 // Add this getting started section to your guide if it is applicable. Use the following include to pull in the git clone instructions from the guides-common repo.
 include::{common-includes}/gitclone.adoc[]
 
-== Running the starting application in embedded Tomcat
+== Running the application in embedded Tomcat
 You might first want to run the initial Spring Boot application without modifications. Move to the `start` directory to run the sample application in embedded Tomcat:
 
 ----
