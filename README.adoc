@@ -34,15 +34,15 @@ Learn how to migrate a Spring Boot Model-View-Controller (MVC) application to ru
 // Do not start the introduction with "This guide...".
 
 == What you'll learn
-You will learn how to use Maven to migrate a sample Spring Boot Model-View-Controller (MVC) application to run in Open Liberty. The sample application that you will be migrating is Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. If you are not familiar with Spring Boot or Spring MVC, it will be helpful to to complete that guide before proceeding. Java 8 or later is required to run the sample application.
+You will learn how to use Maven to migrate a sample Spring Boot Model-View-Controller (MVC) application to run in Open Liberty. The sample application that you will be migrating is Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. If you are not familiar with Spring Boot or Spring MVC, it will be helpful to to complete that guide before proceeding. 
 
-Several steps are required to perform the migration. First, you will remove the embedded Tomcat container. Next, you will replace the Spring Boot Maven Plugin with the Liberty Maven Plugin. Then, you will modify the application to run from a traditional WAR deployment. Finally, you will package and deploy the application to Open Liberty. Note that this guide will not cover migration of test cases, and the starting project does not include test code or dependencies. 
+Three main steps are required to perform the migration. First, you will remove the embedded Tomcat container. Next, you will replace the Spring Boot Maven Plugin with the Liberty Maven Plugin. Finally, you will modify the application to run from a traditional WAR deployment. After the migration is complete, you will package and deploy the application to Open Liberty. This guide will not cover migration of test cases, and the starting project does not include test code or dependencies. 
 
 // Add this getting started section to your guide if it is applicable. Use the following include to pull in the git clone instructions from the guides-common repo.
 include::{common-includes}/gitclone.adoc[]
 
 === Running the application in embedded Tomcat
-You might first want to run the initial Spring Boot application without modifications. Move to the `start` directory and run the sample application in embedded Tomcat. Java 8 is required. 
+You might first want to run the initial Spring Boot application without modifications. Move to the `start` directory and run the sample application in embedded Tomcat. Java 8 or later is required. 
 
 ----
 cd start
@@ -65,12 +65,12 @@ You are now ready to migrate the application to run in Open Liberty instead of e
 
 == Modifying the POM
 
-Make these changes in the `start` folder. Navigate to the `pom.xml` file to modify the starter POM. 
+Navigate to the `start` directory. You will modify the `pom.xml` file in several steps.
 
-=== Change the packaging type
+=== Changing the packaging type
 Start by setting the application packaging type to liberty-assembly. No packaging type is specified in the starting project, so you'll need to add `<packaging>liberty-assembly</packaging>` near the top of the POM.
 
-=== Add POM properties
+=== Adding POM properties
 Next, add the following property:
 
 ----
@@ -83,7 +83,7 @@ Next, add the following property:
 
 The`start-class` property references the fully qualified Spring Boot startup class. For our example, this class is `hello.Application`. This property indicates the main class to use for the runnable JAR.
 
-=== Add and modify dependencies
+=== Adding and modifying dependencies
 
 The `spring-boot-starter-thymeleaf` artifact transitively depends on the `spring-boot-starter-web` dependency. Because `spring-boot-starter-web` uses Tomcat as the default embedded server, you will need to exclude it in our configuration since we want to run our application in Open Liberty. Thus, add the following exclusion to the `spring-boot-starter-thymeleaf` dependency:
 
@@ -103,7 +103,7 @@ The `spring-boot-starter-thymeleaf` artifact transitively depends on the `spring
 
 You can also remove the `spring-boot-devtools` dependency. 
 
-=== Add the Liberty Maven Plugin
+=== Adding the Liberty Maven Plugin
 Finally, replace the `spring-boot-maven-plugin` configuration with the `liberty-maven-plugin` configuration as shown below.
 
 ----
