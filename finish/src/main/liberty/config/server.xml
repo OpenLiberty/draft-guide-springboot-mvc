@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="new server">
     <application context-root="/"
-        location="gs-serving-web-content.war"></application>
+        location="guide-spring-boot-mvc.war"></application>
 
     <!-- Enable features -->
     <featureManager>

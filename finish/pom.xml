@@ -52,6 +52,7 @@
                         <version>RELEASE</version>
                         <type>zip</type>
                     </assemblyArtifact>
+                    <configFile>src/main/liberty/config/server.xml</configFile>
                     <assemblyInstallDirectory>${project.build.directory}/liberty</assemblyInstallDirectory>
                     <packageFile>${project.build.directory}/MVCServerPackage.jar</packageFile>
                     <features>

@@ -48,43 +48,42 @@ cd start
 mvn spring-boot:run
 ----
 
-Notice that the console output will display that the application is running in Tomcat on port 8080. Now access the application at the following URL:
-
-----
-http://localhost:8080/greeting?name=SpringBootApplication
-----
+Notice that the console output will display that the application is running in Tomcat on port 8080. Now access the application at the following URL: http://localhost:8080/greeting?name=GreetingApplication
 
 You'll see from the page output that the `name` request parameter was received and handled:
 
 ----
-Hello, SpringBootApplication!
+Hello, GreetingApplication!
 ----
 
 You are now ready to migrate the application to run in Open Liberty instead of embedded Tomcat. 
 
 == Modifying the POM
 
-Navigate to the `start` directory. You will modify the `pom.xml` file in several steps.
+Navigate to the `start` directory. You will modify the `pom.xml` file in several steps. 
+
+----
+include::finish/pom.xml
+----
 
 === Changing the packaging type
 Start by setting the application packaging type to liberty-assembly. No packaging type is specified in the starting project, so you'll need to add `<packaging>liberty-assembly</packaging>` near the top of the POM.
 
 === Adding POM properties
-Next, add the following property:
+Next, add the `<start-class>hello.Application</start-class>` property. The `properties` block should look like this afterwards:
 
 ----
 <properties>
-   ...
+    <java.version>1.8</java.version>
     <start-class>hello.Application</start-class>
-    ...
 </properties>
 ----
 
-The`start-class` property references the fully qualified Spring Boot startup class. For our example, this class is `hello.Application`. This property indicates the main class to use for the runnable JAR.
+The `start-class` property references the fully qualified Spring Boot startup class; in this case `hello.Application`. This property indicates the main class to use for the runnable JAR.
 
 === Adding and modifying dependencies
 
-The `spring-boot-starter-thymeleaf` artifact transitively depends on the `spring-boot-starter-web` dependency. Because `spring-boot-starter-web` uses Tomcat as the default embedded server, you will need to exclude it in our configuration since we want to run our application in Open Liberty. Thus, add the following exclusion to the `spring-boot-starter-thymeleaf` dependency:
+The `spring-boot-starter-thymeleaf` artifact transitively depends on the `spring-boot-starter-web` dependency. Because `spring-boot-starter-web` uses Tomcat as the default embedded server, you will need to exclude it in your configuration to run your application in Open Liberty. Thus, add the following exclusion to the `spring-boot-starter-thymeleaf` dependency:
 
 ----
 <dependency>
@@ -120,6 +119,7 @@ Finally, replace the `spring-boot-maven-plugin` configuration with the `liberty-
 			<version>RELEASE</version>
 			<type>zip</type>
 		</assemblyArtifact>
+		<configFile>src/main/liberty/config/server.xml</configFile>
 		<assemblyInstallDirectory>${project.build.directory}/liberty</assemblyInstallDirectory>
 		<packageFile>${project.build.directory}/MVCServerPackage.jar</packageFile>
 		<features>
@@ -147,7 +147,7 @@ Next, provide the configuration for the Open Liberty server. Create a `src/test/
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="new server">
 	<application context-root="/"
-		location="gs-serving-web-content.war"></application>
+		location="guide-spring-boot-mvc"></application>
 
 	<!-- Enable features -->
 	<featureManager>
@@ -169,7 +169,7 @@ Next, provide the configuration for the Open Liberty server. Create a `src/test/
 </server>
 ----
 
-In the server configuration, the application context root is mapped to the server root directory. The `servlet-3.1` feature is also needed for running our application, as well as other items which are described in the XML comments. 
+In the server configuration, the application context root is mapped to the server root directory. The `servlet-3.1` feature is also needed for running the application, as well as other items which are described in the XML comments. 
 
 == Changing the application startup process
 Traditionally, a Spring Boot application running on an embedded server such as Tomcat simply calls `SpringApplication.run(...)` in its main class (in this case `hello.Application`). However, your class needs to extend `SpringBootServletInitializer` instead when being deployed to an Open Liberty server. Replace the original class with the following code:
@@ -198,11 +198,7 @@ This concludes the code changes; you are now ready to build and run your applica
 // Use the following include to pull in the Maven build instructions from the guides-common repo.
 include::{common-includes}/mvnbuild.adoc[]
 
-Now verify that your Spring Boot application is running in Open Liberty. Navigate to the following URL (notice that the port has changed since we define port 9080 in our Liberty configuration):
-
-----
-http://localhost:9080/greeting?name=SpringBootApplication
-----
+Now verify that your Spring Boot application is running in Open Liberty. Navigate to the following URL (notice that the port has changed to 9080): http://localhost:9080/greeting?name=GreetingApplication
 
 You will notice the same output as in the starting application.
 
