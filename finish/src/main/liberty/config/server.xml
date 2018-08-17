@@ -3,21 +3,15 @@
     <application context-root="/"
         location="guide-spring-boot-mvc.war"></application>
 
-    <!-- Enable features -->
     <featureManager>
         <feature>servlet-3.1</feature>
     </featureManager>
 
-    <!-- To access this server from a remote client add a host attribute to
-        the following element, e.g. host="*" -->
     <httpEndpoint id="defaultHttpEndpoint" httpPort="9080"
         httpsPort="9443" />
 
-    <!-- Automatically expand WAR files and EAR files -->
     <applicationManager autoExpand="true" />
 
-    <!-- Automatically load the Spring application endpoint once the server
-        is ready. -->
     <webContainer deferServletLoad="false"/>
 
 </server>

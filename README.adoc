@@ -8,7 +8,7 @@
 //
 :page-layout: guide
 :projectid: springboot-mvc
-:page-duration: 30 minutes
+:page-duration: 20 minutes
 :page-releasedate: 2018-11-17
 // INSTRUCTION: Provide a description for the guide index page.
 :page-description: Learn how to migrate a Spring Boot MVC application to run in Open Liberty.
@@ -159,30 +159,24 @@ Next, provide the configuration for the Open Liberty server. Create a `src/main/
 	<application context-root="/"
 		location="guide-spring-boot-mvc"></application>
 
-	<!-- Enable features -->
 	<featureManager>
 		<feature>servlet-3.1</feature>
 	</featureManager>
 
-	<!-- To access this server from a remote client add a host attribute to 
-		the following element, e.g. host="*" -->
 	<httpEndpoint id="defaultHttpEndpoint" httpPort="9080"
 		httpsPort="9443" />
 
-	<!-- Automatically expand WAR files and EAR files -->
 	<applicationManager autoExpand="true" />
     
-    <!-- Automatically load the Spring application endpoint once the server 
-		is ready. -->
 	<webContainer deferServletLoad="false"/>
 
 </server>
 ----
 
-In the server configuration, the application context root is mapped to the server root directory. The `servlet-3.1` feature is also needed for running the application, as well as other items which are described in the XML comments. 
+In the server configuration, the application context root is mapped to the server root directory. The `servlet-3.1` feature is also needed for running the application. The `<applicationManager autoExpand="true" />` configuration automatically expands the WAR file and the `<webContainer deferServletLoad="false"/>` configuration automatically loads the Spring application endpont once the server is ready.
 
 == Changing the application startup process
-Traditionally, a Spring Boot application running on an embedded server such as Tomcat simply calls `SpringApplication.run(...)` in its main class. In this case, the main class is `hello.Application`. However, your class needs to extend `SpringBootServletInitializer` when being deployed to an Open Liberty server. Replace the original `hello.Application` class with the following code:
+Traditionally, a Spring Boot application running on an embedded server such as Tomcat simply calls `SpringApplication.run(...)` in its main class. In this case, the main class is `hello.Application`. However, your class needs to extend `SpringBootServletInitializer` when being deployed to an Open Liberty server. Replace the original code in `src/main/java/hello/Application.java` with the following code:
 
 ----
 package hello;
