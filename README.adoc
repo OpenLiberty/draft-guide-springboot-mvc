@@ -69,10 +69,10 @@ include::finish/pom.xml[]
 Navigate to the `start` directory to begin.
 
 === Changing the packaging type
-Start by setting the application packaging type to liberty-assembly. No packaging type is specified in the starting project, so you'll need to add `<packaging>liberty-assembly</packaging>` near the top of the POM.
+Start by setting the application packaging type to liberty-assembly. No packaging type is specified in the starting project, so add `<packaging>liberty-assembly</packaging>` near the top of the POM.
 
 === Adding POM properties
-Next, add the `<start-class>hello.Application</start-class>` property. The `properties` block should look like this afterwards:
+Next, add the `<start-class>hello.Application</start-class>` property to the `properties` block, which should look this afterwards:
 
 ----
 <properties>
@@ -85,16 +85,7 @@ The `start-class` property references the fully qualified Spring Boot startup cl
 
 === Adding and modifying dependencies
 
-The `spring-boot-starter-thymeleaf` artifact transitively depends on the `spring-boot-starter-web` dependency. Because `spring-boot-starter-web` uses Tomcat as the default embedded server, you will need to exclude it in your configuration to run your application in Open Liberty. Thus, add the following exclusion to the `spring-boot-starter-thymeleaf` dependency:
-
-----
-<exclusion>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-tomcat</artifactId>
-</exclusion>
-----
-
-After you have added the exclusion, the dependency definition will look like this:
+In the project dependencies, the `spring-boot-starter-thymeleaf` artifact depends on the `spring-boot-starter-web` dependency. Because `spring-boot-starter-web` uses Tomcat as the default embedded server, you will need to exclude it in your configuration to run your application on Open Liberty. Modify the dependency definition to look like this:
 
 ----
 <dependency>
@@ -109,10 +100,10 @@ After you have added the exclusion, the dependency definition will look like thi
 </dependency>
 ----
 
-You can also remove the `spring-boot-devtools` dependency. 
+You can also remove the `spring-boot-devtools` dependency since you are running on Open Liberty. 
 
 === Adding the Liberty Maven Plugin
-Finally, replace the `spring-boot-maven-plugin` configuration with the `liberty-maven-plugin` configuration.
+Finally, replace the `spring-boot-maven-plugin` configuration with the `liberty-maven-plugin` configuration:
 
 ----
 <plugin>
@@ -176,7 +167,7 @@ Next, provide the configuration for the Open Liberty server. Create a `src/main/
 In the server configuration, the application context root is mapped to the server root directory. The `servlet-3.1` feature is also needed for running the application. The `<applicationManager autoExpand="true" />` configuration automatically expands the WAR file and the `<webContainer deferServletLoad="false"/>` configuration automatically loads the Spring application endpont once the server is ready.
 
 == Changing the application startup process
-Traditionally, a Spring Boot application running on an embedded server such as Tomcat simply calls `SpringApplication.run(...)` in its main class. In this case, the main class is `hello.Application`. However, your class needs to extend `SpringBootServletInitializer` when being deployed to an Open Liberty server. Replace the original code in `src/main/java/hello/Application.java` with the following code:
+Traditionally, a Spring Boot application running on an embedded server such as Tomcat calls `SpringApplication.run(...)` in its main class. In this case, the main class is `hello.Application`. However, your class needs to extend `SpringBootServletInitializer` when being deployed to an Open Liberty server. Replace the original code in `src/main/java/hello/Application.java` with the following code:
 
 ----
 package hello;
