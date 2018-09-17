@@ -81,7 +81,7 @@ Next, add the `<start-class>hello.Application</start-class>` property to the `pr
 </properties>
 ----
 
-The `start-class` property references the fully qualified Spring Boot startup class; in this case `hello.Application`. This property indicates the main class to use for the runnable JAR.
+The `start-class` property references the fully qualified Spring Boot startup class; in this case `src/main/java/hello/Application.java`. This property indicates the main class to use for the runnable JAR.
 
 === Adding and modifying dependencies
 
@@ -144,24 +144,9 @@ Further documentation of the plugin configuration is provided in the https://git
 == Configuring the server
 Next, provide the configuration for the Open Liberty server. Create a `src/main/liberty/config/server.xml` server configuration file.
 
+[source,xml,indent=0, role="no_copy"]
 ----
-<?xml version="1.0" encoding="UTF-8"?>
-<server description="new server">
-	<application context-root="/"
-		location="guide-spring-boot-mvc"></application>
-
-	<featureManager>
-		<feature>servlet-3.1</feature>
-	</featureManager>
-
-	<httpEndpoint id="defaultHttpEndpoint" httpPort="9080"
-		httpsPort="9443" />
-
-	<applicationManager autoExpand="true" />
-    
-	<webContainer deferServletLoad="false"/>
-
-</server>
+include::finish/src/main/liberty/config/server.xml[tag=bootstrap]
 ----
 
 In the server configuration, the application context root is mapped to the server root directory. The `servlet-3.1` feature is also needed for running the application. The `<applicationManager autoExpand="true" />` configuration automatically expands the WAR file and the `<webContainer deferServletLoad="false"/>` configuration automatically loads the Spring application endpont once the server is ready.
@@ -169,21 +154,9 @@ In the server configuration, the application context root is mapped to the serve
 == Changing the application startup process
 Traditionally, a Spring Boot application running on an embedded server such as Tomcat calls `SpringApplication.run(...)` in its main class. In this case, the main class is `hello.Application`. However, your class needs to extend `SpringBootServletInitializer` when being deployed to an Open Liberty server. Replace the original code in `src/main/java/hello/Application.java` with the following code:
 
+[source, Java]
 ----
-package hello;
-
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-
-@SpringBootApplication
-public class Application extends SpringBootServletInitializer {
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Application.class);
-	}
-}
+include::finish/src/main/java/hello/Application.java[tags=**;!copyright]
 ----
 
 Also recall that you previously set the `<start-class>` parameter in the POM properties above to `hello.Application`. This tells the server that your application starts its execution from this class.
