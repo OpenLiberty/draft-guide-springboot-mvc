@@ -60,11 +60,7 @@ You are now ready to migrate the application to run in Open Liberty instead of e
 
 == Modifying the POM
 
-You will modify the `pom.xml` file in several steps. 
-
-----
-include::finish/pom.xml[]
-----
+You will modify the `pom.xml` file in several steps. For reference, the completed `pom.xml` is provided at the end of this section. 
 
 Navigate to the `start` directory to begin.
 
@@ -136,17 +132,24 @@ Finally, replace the `spring-boot-maven-plugin` configuration with the `liberty-
 </plugin>
 ----
 
+In this plugin, you specify an Open Liberty server called `MVCServer` which the application will be deployed to. You also set `<include>runnable</include>` to indicate that the application will be packaged into a runnable JAR, which is set to be called `MVCServerPackage.jar` in the `<packageFile>` parameter.
 
-In this plugin, you specify an Open Liberty server called "MVCServer" which the application will be deployed to. You also set `<include>runnable</include>` to indicate that the application will be packaged into a runnable JAR, which is set to be called `MVCServerPackage.jar` in the `<packageFile>` parameter.
+Further documentation of the plugin configuration is provided in the https://github.com/WASdev/ci.maven[ci.maven] repository.
 
-Further documentation of the plugin configuration is provided in the https://github.com/WASdev/ci.maven/tree/tools-integration[ci.maven] repository.
+=== Completed pom.xml
+
+After updating your `pom.xml`, it should look as shown in the following example:
+
+----
+include::finish/pom.xml[]
+----
 
 == Configuring the server
 Next, provide the configuration for the Open Liberty server. Create a `src/main/liberty/config/server.xml` server configuration file.
 
-[source,xml,indent=0, role="no_copy"]
+[source,xml,indent=0]
 ----
-include::finish/src/main/liberty/config/server.xml[tag=bootstrap]
+include::finish/src/main/liberty/config/server.xml
 ----
 
 In the server configuration, the application context root is mapped to the server root directory. The `servlet-3.1` feature is also needed for running the application. The `<applicationManager autoExpand="true" />` configuration automatically expands the WAR file and the `<webContainer deferServletLoad="false"/>` configuration automatically loads the Spring application endpont once the server is ready.
