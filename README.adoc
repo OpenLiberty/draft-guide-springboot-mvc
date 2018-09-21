@@ -105,7 +105,7 @@ Further documentation of the plugin configuration is provided in the https://git
 After updating your `pom.xml`, it should look as shown in the following example:
 
 ----
-include::finish/pom.xml[]
+include::finish/pom.xml[tags=**;!copyright;]
 ----
 
 == Configuring the server
@@ -113,7 +113,7 @@ Next, provide the configuration for the Open Liberty server. Create a `src/main/
 
 [source,xml,indent=0]
 ----
-include::finish/src/main/liberty/config/server.xml
+include::finish/src/main/liberty/config/server.xml[tags=**;]
 ----
 
 In the server configuration, the application context root is mapped to the server root directory. The `servlet-3.1` feature is also needed for running the application. The `<applicationManager autoExpand="true" />` configuration automatically expands the WAR file and the `<webContainer deferServletLoad="false"/>` configuration automatically loads the Spring application endpont once the server is ready.
@@ -123,7 +123,7 @@ Traditionally, a Spring Boot application running on an embedded server such as T
 
 [source, Java]
 ----
-include::finish/src/main/java/hello/Application.java[tags=**]
+include::finish/src/main/java/hello/Application.java[tags=**;!copyright;]
 ----
 
 Also recall that you previously set the `<start-class>` parameter in the POM properties above to `hello.Application`. This tells the server that your application starts its execution from this class.
