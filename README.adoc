@@ -50,7 +50,7 @@ mvn spring-boot:run
 
 Notice that the console output will display that the application is running in Tomcat on port 8080. Now access the application at the following URL: http://localhost:8080/greeting?name=GreetingApplication
 
-You'll see from the page output that the `name` request parameter was received and handled:
+You'll see from the page output that the `name` request parameter from the URL was received and handled:
 
 ----
 Hello, GreetingApplication!
@@ -65,12 +65,12 @@ You will modify the `pom.xml` file in several steps. For reference, the complete
 Navigate to the `start` directory to begin.
 
 === Changing the packaging type
-Start by setting the application packaging type to liberty-assembly. No packaging type is specified in the starting project, so add `<packaging>liberty-assembly</packaging>` near the top of the POM.
+Start by setting the application packaging type to liberty-assembly. No packaging type is specified in the starting project, so add `<packaging>liberty-assembly</packaging>` after the `<version>1.0-SNAPSHOT</version>` element in the POM.
 
 === Adding POM properties
 Next, add the `<start-class>hello.Application</start-class>` property to the `properties` block, which should look this afterwards:
 
-[source, xml, indent=0]
+[source, xml, indent=0, role="no_copy"]
 ----
 include::finish/pom.xml[tags=properties]
 ----
@@ -79,9 +79,9 @@ The `start-class` property references the fully qualified Spring Boot startup cl
 
 === Adding and modifying dependencies
 
-In the project dependencies, the `spring-boot-starter-thymeleaf` artifact depends on the `spring-boot-starter-web` dependency. Because `spring-boot-starter-web` uses Tomcat as the default embedded server, you will need to exclude it in your configuration to run your application on Open Liberty. Modify the dependency definition to look like this:
+In the project dependencies, the `spring-boot-starter-thymeleaf` artifact depends on the `spring-boot-starter-web` dependency. Because `spring-boot-starter-web` uses Tomcat as the default embedded server, you will need to exclude it in your configuration to run your application on Open Liberty. Modify the `spring-boot-starter-thymeleaf` dependency definition to look like this:
 
-[source, xml, indent=0]
+[source, xml, indent=0, role="no_copy"]
 ----
 include::finish/pom.xml[tags=dependency-with-exclusion]
 ----
@@ -89,7 +89,7 @@ include::finish/pom.xml[tags=dependency-with-exclusion]
 You can also remove the `spring-boot-devtools` dependency since you are running on Open Liberty.
 
 === Adding the Liberty Maven Plugin
-Finally, replace the `spring-boot-maven-plugin` configuration with the `liberty-maven-plugin` configuration:
+Finally, replace the `spring-boot-maven-plugin` configuration with the `liberty-maven-plugin` configuration inside the `<build> <plugins>` block:
 
 [source, xml, indent=0]
 ----
@@ -104,6 +104,7 @@ Further documentation of the plugin configuration is provided in the https://git
 
 After updating your `pom.xml`, it should look as shown in the following example:
 
+[source, xml, indent=0]
 ----
 include::finish/pom.xml[tags=**;!copyright;]
 ----
