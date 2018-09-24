@@ -23,7 +23,7 @@
 // The details of what to fill in for this template are in the comments. So, read the source for this template to see the comments.
 //
 // Example title: Creating a RESTful web service
-= Migrating a Spring Boot MVC Application to Open Liberty
+= Running a Spring Boot MVC application as a war
 
 [.hidden]
 NOTE: This repository contains the guide documentation source. To view the guide in published form, view it on the https://openliberty.io/guides/{projectid}.html[Open Liberty website].
