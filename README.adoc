@@ -9,35 +9,23 @@
 :page-layout: guide
 :projectid: springboot-mvc
 :page-duration: 20 minutes
-:page-releasedate: 2018-11-17
-// INSTRUCTION: Provide a description for the guide index page.
-:page-description: Learn how to migrate a Spring Boot MVC application to run in Open Liberty.
-// INSTUCTION: Please provide relevant tags, try to avoid inventing new ones, tags where there is 1 guide for the tag isn't useful.
-:page-tags: ['Spring Boot', 'Migration', 'Maven']
-// INSTRUCTION: Specify the unique name of the guide that is used in the permalink.  For example below, it is rest-service
-// INSTRUCTION: Specify the slug in the website. This must be unique.
-:page-permalink: /guides/spring-boot-mvc-migration
-// INSTRUCTION: You should have this to source the common page elements, clone git@github.com:OpenLiberty/guides-common.git
+:page-releasedate: 2018-10-05
+:page-description: Learn how to run a Spring Boot MVC application as a WAR file in Open Liberty instead of an embedded container.
+:page-tags: ['Spring Boot', 'Maven']
+:page-permalink: /guides/{projectid}
 :common-includes: https://raw.githubusercontent.com/OpenLiberty/guides-common/master
-// INSTRUCTION: You can't have a new line between the attributes and the title.
-// The details of what to fill in for this template are in the comments. So, read the source for this template to see the comments.
-//
-// Example title: Creating a RESTful web service
-= Running a Spring Boot MVC application as a war
+= Running a Spring Boot MVC application as a WAR file
 
 [.hidden]
 NOTE: This repository contains the guide documentation source. To view the guide in published form, view it on the https://openliberty.io/guides/{projectid}.html[Open Liberty website].
 
-Learn how to migrate a Spring Boot Model-View-Controller (MVC) application to run in Open Liberty instead of an embedded container.
-// Write no more than two sentences, or about fifty words with meaningful information on what the user can accomplish with this guide.
-// Do not start the introduction with "This guide...".
+Learn how to run a Spring Boot Model-View-Controller (MVC) application as a WAR file in Open Liberty instead of an embedded container.
 
 == What you'll learn
-You will learn how to use Maven to migrate a sample Spring Boot Model-View-Controller (MVC) application to run in Open Liberty. The sample application that you will be migrating is from Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. If you are not familiar with Spring Boot or Spring MVC, it will be helpful to to complete that guide before proceeding.
+You will learn how to use Maven to run a sample Spring Boot Model-View-Controller (MVC) application as a WAR file in Open Liberty. The sample application that you will be working with is from Spring's https://spring.io/guides/gs/serving-web-content/[Serving Web Content with Spring MVC] guide. If you are not familiar with Spring Boot or Spring MVC, it will be helpful to to complete that guide before proceeding.
 
-Three main steps are required to perform the migration. First, you will modify the project POM, primarily to remove Tomcat and add the Liberty Maven Plugin. Next, you will configure the Open Liberty server through a `server.xml` file. Finally, you will modify the application to run from a traditional WAR deployment. After the migration is complete, you will package and deploy the application to Open Liberty. This guide will not cover migration of test cases, and the starting project does not include test code or dependencies.
+Three main steps are required to build the WAR file from the Spring Boot MVC application. First, you will modify the project POM, primarily to remove Tomcat and add the Liberty Maven Plugin. Next, you will configure the Open Liberty server through a `server.xml` file. Finally, you will modify the application to run from a traditional WAR deployment. After these steps are complete, you will package and deploy the application to Open Liberty. This guide will not cover running the Spring Boot MVC test cases in Open Liberty, and the starting project does not include test code or dependencies.
 
-// Add this getting started section to your guide if it is applicable. Use the following include to pull in the git clone instructions from the guides-common repo.
 include::{common-includes}/gitclone.adoc[]
 
 === Running the application in embedded Tomcat
@@ -56,7 +44,7 @@ You'll see from the page output that the `name` request parameter from the URL w
 Hello, GreetingApplication!
 ----
 
-You are now ready to migrate the application to run in Open Liberty instead of embedded Tomcat.
+You are now ready to build the application into a WAR file and run in Open Liberty instead of embedded Tomcat.
 
 == Modifying the POM
 
@@ -65,7 +53,7 @@ You will modify the `pom.xml` file in several steps. For reference, the complete
 Navigate to the `start` directory to begin.
 
 === Changing the packaging type
-Start by setting the application packaging type to liberty-assembly. No packaging type is specified in the starting project, so add `<packaging>liberty-assembly</packaging>` after the `<version>1.0-SNAPSHOT</version>` element in the POM.
+Start by setting the application packaging type to liberty-assembly. No packaging type is specified in the starting project, so add `<packaging>liberty-assembly</packaging>` after `<version>1.0-SNAPSHOT</version>` in the POM.
 
 === Adding POM properties
 Next, add the `<start-class>hello.Application</start-class>` property to the `properties` block, which should look this afterwards:
@@ -131,24 +119,14 @@ Also recall that you previously set the `<start-class>` parameter in the POM pro
 
 This concludes the code changes; you are now ready to build and run your application in Open Liberty.
 
-// Use the following include to pull in the Maven build instructions from the guides-common repo.
 include::{common-includes}/mvnbuild.adoc[]
 
 Now verify that your Spring Boot application is running in Open Liberty. Navigate to the following URL: http://localhost:9080/greeting?name=GreetingApplication. Notice that the port has changed to 9080, as this is the default port used by Open Liberty. You will see the same output on this page as in the starting application.
 
-// Use the following include to pull in the Liberty start/stop server instructions from the guides-common repo.
 include::{common-includes}/mvncompile.adoc[]
 
 == Great work! You're done!
 
-You migrated a basic Spring Boot MVC application to run in Open Liberty.
+You built a WAR file from a basic Spring Boot MVC application to run in Open Liberty.
 
-// Briefly summarize what the user achieved in this guide (1-2 sentences).
-
-// OPTIONAL: briefly state what the user could do next now that they've learned the technologies in this guide.
-
-// Include the below from the guides-common repo to tell users how they can contribute to the guide
 include::{common-includes}/finish.adoc[]
-
-// DO NO CREATE ANYMORE SECTIONS AT THIS POINT
-// Related guides will be added in automatically here if you included them in ":page-related-guides"
