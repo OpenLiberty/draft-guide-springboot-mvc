@@ -4,7 +4,7 @@
         location="guide-spring-boot-mvc.war"></application>
 
     <featureManager>
-        <feature>servlet-3.1</feature>
+        <feature>servlet-4.0</feature>
     </featureManager>
 
     <httpEndpoint id="defaultHttpEndpoint" httpPort="9080"
